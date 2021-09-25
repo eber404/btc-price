@@ -1,1 +1,1 @@
-using petite-vue to fetch the btc price in real time
+using petite-vue to fetch btc price in real time
