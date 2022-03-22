@@ -3,27 +3,28 @@ import { createApp } from 'https://unpkg.com/petite-vue?module'
 import { getBtcPrice } from '../services/coindesk.js'
 
 function Btc() {
-  const state = {
+  return {
+    // state
     price: 0,
-  }
 
-  const lifecycles = {
-    async mounted() {
-      await this.refreshPrice()
+    // lifecycle hooks
+    mounted() {
+      this.refreshPrice()
+
       setInterval(async () => await this.refreshPrice(), 5000)
     },
-  }
 
-  const methods = {
+    // methods
     async refreshPrice() {
-      this.price = await getBtcPrice()
-    },
-  }
+      const price = await getBtcPrice()
 
-  return {
-    ...state,
-    ...lifecycles,
-    ...methods,
+      const toBRL = Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      })
+
+      this.price = toBRL.format(price)
+    },
   }
 }
 
